@@ -108,7 +108,7 @@ namespace lab8
         public static void Serial_tienda(List<Tienda> u)      //Serializamos
         {
             IFormatter formatter5 = new BinaryFormatter();
-            Stream stream5 = new FileStream("Restaurante.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+            Stream stream5 = new FileStream("Tienda.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
             formatter5.Serialize(stream5, u);
             stream5.Close();
         }

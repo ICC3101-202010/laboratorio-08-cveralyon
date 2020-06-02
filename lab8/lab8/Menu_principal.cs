@@ -68,15 +68,7 @@ namespace lab8
                 comboBox_LISTA_locales_para_editar.Items.Add(cine.Name);
 
             }
-            string categorias = "";
-            foreach (Tienda tienda in Controller.lista_tiendas)
-            {
-                foreach (string cat in Controller.Lista_categiria_tiendas)
-                {
-                    categorias = cat + ", ";
-                }
-
-            }
+            
             foreach (Tienda tienda in Controller.lista_tiendas)
             {
                 int n2 = tabla_tiendas.Rows.Add();
@@ -85,7 +77,13 @@ namespace lab8
                 tabla_tiendas.Rows[n2].Cells[2].Value = tienda.Id_store;
                 tabla_tiendas.Rows[n2].Cells[3].Value = tienda.Open_t;
                 tabla_tiendas.Rows[n2].Cells[4].Value = tienda.Close_t;
+                string categorias = "";
+                foreach (string ca in tienda.Categories1)
+                {
+                    categorias = ca + ", ";
+                }
                 tabla_tiendas.Rows[n2].Cells[5].Value = categorias;
+                
                 comboBox_LISTA_locales_para_editar.Items.Add(tienda.Name);
 
             }
@@ -434,6 +432,7 @@ namespace lab8
             {
                 Controller.nueva_tienda(nombre_text_local.Text, dueno_text_local.Text, int.Parse(id_text_local.Text), hora_open, hora_close, categorias_tienda);
             }
+            Controller.Guardar();
             label_mesas_explusivas_restaurante.Visible = false;
             checkBox_mesas_explisivas.Visible = false;
             label_no_mesas_exclusivas.Visible = false;
@@ -515,10 +514,17 @@ namespace lab8
             tabla_recre.Rows.Clear();
             tabla_restaurantes.Rows.Clear();
             tabla_tiendas.Rows.Clear();
+            comboBox_LISTA_locales_para_editar.Items.Clear();
         }
 
         private void btn_ir_para_editar_locales_Click(object sender, EventArgs e)
         {
+            tabla_cines.Rows.Clear();
+            tabla_recre.Rows.Clear();
+            tabla_restaurantes.Rows.Clear();
+            tabla_tiendas.Rows.Clear();
+            comboBox_LISTA_locales_para_editar.Items.Clear();
+            
             panel_ir_editar_local.Visible = true;
             panel_ir_editar_local.Dock = DockStyle.Fill;
             foreach (Recreacional recreacional in Controller.lista_recre)
@@ -653,12 +659,65 @@ namespace lab8
                     restaurante.Close_t = text_hora_close_editare.Text;
                 }
             }
-            Controller.Cargar();
+            Controller.Guardar();
             text_nombre_editar.Text = "";
             text_duenio_editar.Text = "";
             text_id_editar.Text = "";
             text_hora_open_editar.Text = "";
             text_hora_close_editare.Text = "";
+            Controller.Cargar();
+            foreach (Recreacional recreacional in Controller.lista_recre)
+            {
+                int n = tabla_recre.Rows.Add();
+                tabla_recre.Rows[n].Cells[0].Value = recreacional.Name;
+                tabla_recre.Rows[n].Cells[1].Value = recreacional.Owner;
+                tabla_recre.Rows[n].Cells[2].Value = recreacional.Id_store;
+                tabla_recre.Rows[n].Cells[3].Value = recreacional.Open_t;
+                tabla_recre.Rows[n].Cells[4].Value = recreacional.Close_t;
+                comboBox_LISTA_locales_para_editar.Items.Add(recreacional.Name);
+            }
+            foreach (Cine cine in Controller.lista_cines)
+            {
+                int n1 = tabla_cines.Rows.Add();
+                tabla_cines.Rows[n1].Cells[0].Value = cine.Name;
+                tabla_cines.Rows[n1].Cells[1].Value = cine.Owner;
+                tabla_cines.Rows[n1].Cells[2].Value = cine.Id_store;
+                tabla_cines.Rows[n1].Cells[3].Value = cine.Open_t;
+                tabla_cines.Rows[n1].Cells[4].Value = cine.Close_t;
+                tabla_cines.Rows[n1].Cells[5].Value = cine.Num_salas;
+                comboBox_LISTA_locales_para_editar.Items.Add(cine.Name);
+
+            }
+            
+            foreach (Tienda tienda in Controller.lista_tiendas)
+            {
+                int n2 = tabla_tiendas.Rows.Add();
+                tabla_tiendas.Rows[n2].Cells[0].Value = tienda.Name;
+                tabla_tiendas.Rows[n2].Cells[1].Value = tienda.Owner;
+                tabla_tiendas.Rows[n2].Cells[2].Value = tienda.Id_store;
+                tabla_tiendas.Rows[n2].Cells[3].Value = tienda.Open_t;
+                tabla_tiendas.Rows[n2].Cells[4].Value = tienda.Close_t;
+                string categorias = "";
+                foreach (string ca in tienda.Categories1)
+                {
+                    categorias = categorias + ca + ", ";
+                }
+                tabla_tiendas.Rows[n2].Cells[5].Value = categorias;
+                comboBox_LISTA_locales_para_editar.Items.Add(tienda.Name);
+
+            }
+            foreach (Restaurante restaurante in Controller.lista_restaurantes)
+            {
+                int n3 = tabla_restaurantes.Rows.Add();
+                tabla_restaurantes.Rows[n3].Cells[0].Value = restaurante.Name;
+                tabla_restaurantes.Rows[n3].Cells[1].Value = restaurante.Owner;
+                tabla_restaurantes.Rows[n3].Cells[2].Value = restaurante.Id_store;
+                tabla_restaurantes.Rows[n3].Cells[3].Value = restaurante.Open_t;
+                tabla_restaurantes.Rows[n3].Cells[4].Value = restaurante.Close_t;
+                tabla_restaurantes.Rows[n3].Cells[5].Value = restaurante.Exclusive_table;
+                comboBox_LISTA_locales_para_editar.Items.Add(restaurante.Name);
+
+            }
         }
     }
 }
